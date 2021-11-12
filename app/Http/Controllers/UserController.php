@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Post;
+use App\User;
 use Illuminate\Http\Request;
 
-class PostController extends Controller
+
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,32 +42,55 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        echo "<h1>Artigo</h1>";  
-        echo "<h3>{$post->title}</h3>";
-        echo "<p>#{$post->id} Conteúdo: {$post->content}</p>"; 
-
-        $user = $post->author()->first();
+        //como estou passando só um método, vou pegar só pelo primeiro ID
+        $user = User::where('id', $id)->first();
 
         if($user)
         {
-            echo "<h1>Autor</h1>";  
+            echo "<h1>Dados do Usuários</h1>";  
             echo "<p><strong>Nome:</strong>  {$user->name} </p>";
             echo "<p><strong>Email:</strong> {$user->email} </p>";
-        }   
+        }     
+
+        //passar o método address que vai estar devolvendo o objeto
+        //pode devolver uma coleção ou um elemento com o firs()
+        $address = $user->address()->first();
+
+        if($address) 
+        {
+            echo "<h1>Endereço Completo</h1>";  
+            echo "<p><em>Endereço: {$address->street}, {$address->number}, {$address->city}/{$address->state}</em></p>";
+        }
+
+        $posts = $user->posts()->get();
+      
+        if($posts)
+        {
+                echo "<h1>Artigo</h1>";  
+            foreach($posts as $post)  
+            {
+                echo "<p>Titulo: {$post->title}</p>";
+                echo "<p>#{$post->id} Conteúdo: {$post->content}</p>";
+            }
+        }
+
+    
+
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
         //
     }
@@ -75,10 +99,10 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -86,10 +110,10 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post  $post
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
         //
     }

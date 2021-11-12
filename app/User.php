@@ -36,4 +36,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //fazer o relacionamento entre as models
+    //criar meu método address que será chamado na controller User
+    public function address()
+    {
+        //dentro desse elemento ele terá apenas um, preciso passar qual modelo vou me relacionar 
+        //e as 2 chaves que vai unir esses 2 modelos
+        // pegar do namespace app (Adrress::) e passar as 2 cahves
+        // foreignkey e localkey // coluna 'user' da tabela addresses
+        return $this->hasOne(Address::class,'user', 'id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'user', 'id');
+    }
 }

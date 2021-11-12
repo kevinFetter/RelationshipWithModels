@@ -44,9 +44,24 @@ class AddressController extends Controller
      * @param  \App\Address  $address
      * @return \Illuminate\Http\Response
      */
+
+     //a injeção de dependencia Address já faz o bind dos parametros e devolver o modelo pronto
     public function show(Address $address)
     {
-        //
+        if($address) 
+        {
+            echo "<h1>Endereço Completo</h1>";  
+            echo "<p><em>Endereço: {$address->street}, {$address->number}, {$address->city}/{$address->state}</em></p>";
+        } 
+
+        $user = $address->user()->first();
+
+        if($user)
+        {
+            echo "<h1>Dados do Usuários</h1>";  
+            echo "<p><strong>Nome:</strong>  {$user->name} </p>";
+            echo "<p><strong>Email:</strong> {$user->email} </p>";
+        }   
     }
 
     /**
