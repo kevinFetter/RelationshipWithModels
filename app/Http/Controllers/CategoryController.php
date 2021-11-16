@@ -47,8 +47,21 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         echo "<h1>Categoria</h1>"; 
-        echo "<p>categoria {$category->title}</p>";
-        echo "<p>categoria {$category->description}</p>"; 
+        echo "<p><strong>Categoria:</strong> {$category->title}</p>";
+        echo "<p><strong>Descrição:</strong> {$category->description}</p>";  
+
+        //Listar os Artigos
+        $posts = $category->post()->get();
+
+        if($posts)
+        {
+            echo "<h1>Artigos</h1>";
+            foreach($posts as $post)
+            {
+                echo "<p><strong>Título:</strong> {$post->title}</p>";
+                echo "<p><strong>Conteúdo</strong> {$post->content}</p>";
+            }
+        }
     }
 
     /**

@@ -11,7 +11,7 @@ class Post extends Model
 
     public function author() 
     {   //caminho da volta
-         return $this->belongsTo(User::class, 'user', 'id');
+        return $this->belongsTo(User::class, 'user', 'id');
     }
 
     public function categories()
