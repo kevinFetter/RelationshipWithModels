@@ -46,7 +46,9 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        echo "<h1>Categoria</h1>"; 
+        echo "<p>categoria {$category->title}</p>";
+        echo "<p>categoria {$category->description}</p>"; 
     }
 
     /**
